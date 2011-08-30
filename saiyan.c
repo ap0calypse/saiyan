@@ -18,7 +18,7 @@
 #define BLOCKLENGTH 128
 
 void usage();
-void crypt_block(char *, char *);
+char *crypt_block(char *, char *);
 void process_file(char *, char *);
 char *get_password();
 
@@ -54,14 +54,23 @@ char *get_password() {
     return(key);
 }
 
-char crypt_block(char *key, char *block) {
-    char cleartext[BLOCKLENGTH];
-    char ciphertext[BLOCKLENGTH];
+char *crypt_block(char *key, char *block) {
+
+    
 }
 
 void process_file(char *infile, char *outfile) {
-    FILE *infd;
+    char cleartext[BLOCKLENGTH];
+    char ciphertext[BLOCKLENGTH];
+    char *key;
+    key = get_password();
+    FILE *infd, *outfd;
     infd = fopen(infile, "r");
-
-
+    outfd = fopen(outfile, "w");
+    int i, character;
+    while ((character = fgetc(infd)) != EOF) {
+        printf("%s", character);
+    }
+    fclose(infd);
+    fclose(outfd);
 }
