@@ -2,12 +2,13 @@
 #include <ctype.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdlib.h>
 
 /******************************************************************************
     project:    saiyan
     purpose:    symmetric cipher tool, encrypts/decrypts text files
 
-    usage:      ./saiyan /PATH/TO/INPUTFILE [ /PATH/TO/OUTPUTFILE ]
+    usage:      ./saiyan /PATH/TO/INPUTFILE /PATH/TO/OUTPUTFILE
     
     author:     Manuel Fill (ap0calypse@agitatio.org)
     license:    public domain
@@ -17,32 +18,25 @@
 #define BLOCKLENGTH 128
 
 void usage();
+void crypt_block(char *, char *);
+void process_file(char *, char *);
+char *get_password();
 
 int main(int argc, char *argv[]) {
     
-    if (argc < 2) {
+    // not enough args
+    if (argc < 3) {
         usage();
         exit(1);
     }
-    else if (argc == 2) {
-
-    char *key;
-    key = getpass("Please enter password: (won't be echoed) "); // getpass comes from unistd.h
-
-    char cleartext[BLOCKLENGTH] = "aaaaaaaaaaaaaaaaaaaaaa";
-    char ciphertext[BLOCKLENGTH];
-    int i;
-    for(i = 0; i < strlen(cleartext); i++) {
-        ciphertext[i] = cleartext[i] ^ key[i];
+    // INPUTFILE given
+    else if (argc == 3) {
+        process_file(argv[1], argv[2]);
     }
-    printf("the cipherded text is %s\n", ciphertext);
-    
-    for(i = 0; i < strlen(cleartext); i++) {
-        ciphertext[i] = ciphertext[i] ^ key[i];
+    else {
+        usage();
+        exit(2);
     }
-    
-    printf("the de-cipherded text is %s\n", ciphertext);
-
     return(0);
 }
 
@@ -52,4 +46,22 @@ void usage() {
             "\t\tWhere INPUTFILE is the path to a plain or ciphered text file,\n" \
             "\t\tand OUTPUTFILE is optional. If you don't specify OUTPUTFILE, output\n" \
             "\t\twill be sent to STDOUT.\n\n");
+}
+
+char *get_password() {
+    char *key;
+    key = getpass("Please enter password: (won't be echoed) "); // getpass comes from unistd.h
+    return(key);
+}
+
+char crypt_block(char *key, char *block) {
+    char cleartext[BLOCKLENGTH];
+    char ciphertext[BLOCKLENGTH];
+}
+
+void process_file(char *infile, char *outfile) {
+    FILE *infd;
+    infd = fopen(infile, "r");
+
+
 }
