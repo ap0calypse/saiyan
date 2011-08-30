@@ -15,12 +15,9 @@
 *******************************************************************************/
 
 
-#define BLOCKLENGTH 128
 
 void usage();
-char *crypt_block(char *, char *);
 void process_file(char *, char *);
-char *get_password();
 
 int main(int argc, char *argv[]) {
     
@@ -48,28 +45,21 @@ void usage() {
             "\t\twill be sent to STDOUT.\n\n");
 }
 
-char *get_password() {
+void process_file(char *infile, char *outfile) {
     char *key;
     key = getpass("Please enter password: (won't be echoed) "); // getpass comes from unistd.h
-    return(key);
-}
 
-char *crypt_block(char *key, char *block) {
-
-    
-}
-
-void process_file(char *infile, char *outfile) {
-    char cleartext[BLOCKLENGTH];
-    char ciphertext[BLOCKLENGTH];
-    char *key;
-    key = get_password();
     FILE *infd, *outfd;
     infd = fopen(infile, "r");
     outfd = fopen(outfile, "w");
-    int i, character;
+    int i = 0, character;
+    
     while ((character = fgetc(infd)) != EOF) {
-        printf("%s", character);
+        fputc(character ^ key[i], outfd);
+        i++;
+        if (key[i] == '\0') {
+            i = 0;
+        }
     }
     fclose(infd);
     fclose(outfd);
