@@ -12,26 +12,11 @@
     license:    public domain
 *******************************************************************************/
 
-
-
 void usage();
 void process_file(char *, char *);
 
 int main(int argc, char *argv[]) {
-    
-    // not enough args
-    if (argc < 3) {
-        usage();
-        exit(1);
-    }
-    // INPUTFILE and OUTPUTFILE given
-    else if (argc == 3) {
-        process_file(argv[1], argv[2]);
-    }
-    else {
-        usage();
-        exit(2);
-    }
+    (argc == 3) ? process_file(argv[1], argv[2]) : usage(); exit(1);
     return(0);
 }
 
