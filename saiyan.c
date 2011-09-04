@@ -37,11 +37,8 @@ void process_file(char *infile, char *outfile) {
     int i = 0, character;
     
     while ((character = fgetc(infd)) != EOF) {
-        fputc(character ^ key[i], outfd);
-        i++;
-        if (key[i] == '\0') {
-            i = 0;
-        }
+        fputc(character ^ key[i++], outfd);
+        key[i] == '\0' ? i = 0 : i ;
     }
     fclose(infd);
     fclose(outfd);
