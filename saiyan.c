@@ -29,7 +29,7 @@ void usage() {
 
 void process_file(char *infile, char *outfile) {
     char *key;
-    key = getpass("Please enter password: (won't be echoed) "); // getpass comes from unistd.h
+    key = getpass("Please enter password: (won't be echoed) ");
 
     FILE *infd, *outfd;
     infd = fopen(infile, "r");
